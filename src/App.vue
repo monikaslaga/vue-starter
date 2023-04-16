@@ -3,24 +3,26 @@
         <h1>Witaj w systemie do zapisów na zajęcia</h1>
 
         <div v-if="authenticatedUsername">
-            <UserPanel :username="authenticatedUsername" @logout="logMeOut()"></UserPanel>
-            <MeetingsPage></MeetingsPage>
+            <h2>Witaj {{ authenticatedUsername }}</h2>
+            <a @click="logMeOut()">Wyloguj</a>
         </div>
 
         <div v-else>
-            <LoginForm @login="(username) => logMeIn(username)"></LoginForm>
+            <LoginForm @login="(username) => logMeIn(username)" button-label="Wejdź"></LoginForm>
+            <LoginForm @login="(username) => logMeIn(username)" button-label="Wleć"></LoginForm>
+            <LoginForm @login="(username) => logMeIn(username)"
+                        :button-label="Math.random() < 0.5 ? 'Etykieta A' : 'Etykieta B'"></LoginForm>
         </div>
+
     </div>
 </template>
 
 <script>
     import "milligram";
     import LoginForm from "./LoginForm";
-    import UserPanel from "./UserPanel";
-    import MeetingsPage from "./meetings/MeetingsPage";
 
     export default {
-        components: {LoginForm, MeetingsPage, UserPanel},
+        components: {LoginForm},
         data() {
             return {
                 authenticatedUsername: '',

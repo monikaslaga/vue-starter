@@ -1,38 +1,26 @@
 <template>
     <div>
-        <h1>Witaj w systemie do zapisów na zajęcia</h1>
+        <h1>Twój e-mail to {{ email }}</h1>
 
-        <div v-if="authenticatedUsername">
-            <h2>Witaj {{ authenticatedUsername }}</h2>
-            <a @click="logMeOut()">Wyloguj</a>
-        </div>
+        <div v-if="email.length < 10">Ale masz krótki adres!</div>
+        <div v-else-if="email.length < 15">Twój adres e-mail jest w sam raz.</div>
+        <div v-else>Twój adres e-mail jest stanowczo za długi.</div>
 
-        <div v-else>
-            <label>Zaloguj się e-mailem</label>
-            <input type="email" v-model="email">
-            <button @click="logMeIn()">Wchodzę</button>
-        </div>
-
+        <input type="email" v-model="email">
+        <button @click="alertMyEmail()">Wyświetl mój e-mail w alercie</button>
     </div>
 </template>
 
 <script>
-    import "milligram";
-
     export default {
         data() {
             return {
-                authenticatedUsername: '',
                 email: ''
             }
         },
         methods: {
-            logMeIn() {
-                this.authenticatedUsername = this.email;
-                this.email = '';
-            },
-            logMeOut() {
-                this.authenticatedUsername = '';
+            alertMyEmail() {
+                alert(this.email);
             }
         }
     }
